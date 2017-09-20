@@ -44,4 +44,46 @@ exports.deleteCourse = function(req,res){
 
 exports.getCourseById = function(req,res){
 
+	Course.findById(req.params.course_id, function(err, course) {
+	 if (err){
+	 	 res.send(err);
+	 }
+	 else {
+	 	res.json(course);
+	 }
+ });
+}
+
+exports.getTimetableForCourse = function(req,res){
+
+
+	
+}
+
+exports.createTimetable = function(req,res){
+
+
+Course.findById(req.params.course_id, function(err, course) {
+	 if (err){
+	 	 res.send(err);
+	 }
+	 else {
+	 	var newTimetable = {
+	 		startTime : req.body.startTime,
+	 		endTime : req.body.endTime,
+	 		day : req.body.day,
+	 		room: req.body.room
+	 	}
+	 	course.timetable.push(newTimetable)
+	 	course.save(function(err) {
+		if (err){
+			res.send(err);
+		}
+		else {
+			res.json({ message: 'Course timetable added!!' });
+		}
+	 
+ });
+}
+});
 }
